@@ -19,13 +19,14 @@ function Nav({ route, onNavigate, lang, onLangToggle, dark, onThemeToggle, cartC
       k: "products",
       label: t.nav_products,
       dropdown: [
-        { k: "products", label: t.nav_products_digital, route: "products", icon: Wallet },
         { k: "program", label: t.nav_products_insurance, route: "program", icon: ShieldCheck },
+        { k: "products", label: t.nav_products_digital, route: "products", icon: Wallet },
         { k: "webinar", label: t.nav_products_seminar, route: "webinar", icon: Video || Calendar },
         { k: "book", label: t.nav_products_consult, route: "book", icon: User },
       ],
     },
     { k: "partnership", label: t.nav_partnership, route: "partnership" },
+    { k: "wealthtracker", label: "Wealth Tracker AI", external: "wealth-tracker-ai.html" },
     { k: "about", label: t.nav_about, route: "about" },
     { k: "contact", label: t.nav_contact, route: "contact" },
   ];
@@ -57,6 +58,26 @@ function Nav({ route, onNavigate, lang, onLangToggle, dark, onThemeToggle, cartC
             {links.map((l) => (
               l.dropdown ? (
                 <NavDropdown key={l.k} label={l.label} items={l.dropdown} route={route} onNavigate={onNavigate} />
+              ) : l.external ? (
+                <button
+                  key={l.k}
+                  onClick={() => window.open(l.external, "_blank")}
+                  style={{
+                    background: "transparent",
+                    border: 0,
+                    color: "var(--accent)",
+                    padding: "8px 12px",
+                    borderRadius: 999,
+                    font: "inherit",
+                    fontSize: 13,
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    transition: "all .15s ease",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {l.label}
+                </button>
               ) : (
                 <button
                   key={l.k}
@@ -106,9 +127,6 @@ function Nav({ route, onNavigate, lang, onLangToggle, dark, onThemeToggle, cartC
             >
               {lang.toUpperCase()}
             </button>
-            <Button variant="primary" size="sm" onClick={() => onNavigate({ name: "calc" })}>
-              {t.nav_cta}
-            </Button>
             <button
               className="nav-burger"
               onClick={() => setOpen(true)}
@@ -176,6 +194,27 @@ function Nav({ route, onNavigate, lang, onLangToggle, dark, onThemeToggle, cartC
                     >→ {it.label}</button>
                   ))}
                 </React.Fragment>
+              ) : l.external ? (
+                <button
+                  key={l.k}
+                  onClick={() => { setOpen(false); window.open(l.external, "_blank"); }}
+                  style={{
+                    background: "transparent",
+                    border: 0,
+                    color: "var(--accent)",
+                    padding: "16px 0",
+                    font: "inherit",
+                    fontFamily: "Bricolage Grotesque, sans-serif",
+                    fontSize: 28,
+                    fontWeight: 700,
+                    letterSpacing: "-0.02em",
+                    textAlign: "left",
+                    cursor: "pointer",
+                    borderBottom: "1px solid var(--border)",
+                  }}
+                >
+                  {l.label}
+                </button>
               ) : (
                 <button
                   key={l.k}
@@ -340,19 +379,21 @@ function IconButton({ children, onClick, title }) {
 function Logo() {
   return (
     <div style={{
-      width: 32,
+      width: 44,
       height: 32,
-      borderRadius: 10,
+      borderRadius: 9,
       background: "var(--accent)",
       display: "inline-flex",
       alignItems: "center",
       justifyContent: "center",
-      color: "var(--accent-ink)",
-      fontFamily: "Bricolage Grotesque, sans-serif",
-      fontWeight: 800,
-      fontSize: 16,
-      letterSpacing: "-0.04em",
-    }}>w<span style={{ fontSize: 8, marginLeft: -1, marginTop: -4 }}>+</span></div>
+      padding: "0 7px",
+    }}>
+      <img
+        src="assets/brand/logo-mark-white.png"
+        alt="wealthplanner.id"
+        style={{ width: "100%", height: "auto", display: "block" }}
+      />
+    </div>
   );
 }
 
